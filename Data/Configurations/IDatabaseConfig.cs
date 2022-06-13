@@ -2,8 +2,8 @@
 {
     public interface IDatabaseConfig
     {
-        string DatabaseName { get; set; }
+        string? DatabaseName { get; set; }
 
-        string ConnectionUri { get; set; }
+        string? DatabaseString { get; set; }
     }
 }
