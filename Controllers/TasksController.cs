@@ -1,11 +1,15 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using TaskManager.Data.Repositories.Interfaces;
 
 namespace TaskManager.Controllers
 {
+
     [Route("api/[controller]")]
     [ApiController]
     public class TasksController : ControllerBase
     {
+        private ITodoRepository _todoRepository;
+
         // GET: api/<TasksController>
         [HttpGet]
         public IEnumerable<string> Get()
