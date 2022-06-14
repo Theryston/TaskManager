@@ -42,16 +42,22 @@ namespace TaskManager.Controllers
         [HttpPost]
         public IActionResult Post([FromBody] ToDo todo)
         {
-            _todoRepository.Add(todo);
-            return Ok("Todo added");
+            var newTodo = new ToDo(todo.Name, todo.Description);
+            _todoRepository.Add(newTodo);
+            return Ok(newTodo);
         }
 
         // PUT api/<TasksController>/5
         [HttpPut("{id}")]
-        public IActionResult Put(string id, [FromBody] ToDo toDo)
+        public IActionResult Put(string id, [FromBody] ToDo toDoUpdated)
         {
-            _todoRepository.Update(id, toDo);
-            return Ok("Todo updated");
+            var toDoExist = _todoRepository.Get(id);
+
+            if (toDoExist == null) return BadRequest("ToDo not found");
+
+            toDoExist.ToDoUpdate(toDoUpdated.Name, toDoUpdated.Description, toDoUpdated.Done);
+            _todoRepository.Update(id, toDoExist);
+            return Ok(toDoExist);
         }
 
         // DELETE api/<TasksController>/5
@@ -59,7 +65,7 @@ namespace TaskManager.Controllers
         public IActionResult Delete(string id)
         {
             _todoRepository.Delete(id);
-            return Ok("Todo deleted");
+            return NoContent();
         }
     }
 }

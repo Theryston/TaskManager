@@ -23,5 +23,13 @@
             DoneAt = null;
             Done = false;
         }
+
+        public void ToDoUpdate(string name, string description, bool? done = false)
+        {
+            Name = name;
+            Description = description;
+            Done = done ?? false;
+            DoneAt = done == true ? DateTime.Now : null;
+        }
     }
 }
